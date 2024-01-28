@@ -1,118 +1,157 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import React, { useState }  from 'react'
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [cityDetails, setCityDetails] = useState<{date: string, city: string}[]>([])
+  const [userDetails, setUserDetails] = useState<{firstName: string, lastName: string, dob: string}>()
+
+  const clearForm = (event: React.FormEvent<HTMLFormElement>) => {
+    const form = event.currentTarget;
+    form.reset();
+  } 
+
+  const submitCityDetails = (event: React.FormEvent<HTMLFormElement>) =>{
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    setCityDetails([...cityDetails, {
+      date:  data.get("dateTravel") as string,
+      city: data.get("city") as string,
+    }])
+    clearForm(event)
+  }
+
+  const submitUserDetails = (event: React.FormEvent<HTMLFormElement>) =>{
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    setUserDetails({
+      firstName:  data.get("firstName") as string,
+      lastName: data.get("lastName") as string,
+      dob: data.get("dob") as string
+    })
+    clearForm(event)
+  }
+
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="grid justify-items-center">
+      <section className="p-10 bg-gray-50">
+        <div className="flex justify-center items-center text-[36px]">
+            User Form
         </div>
-      </div>
+        <div className="mt-4 w-[1012px] h-[248px] p-6 bg-white rounded-xl border-l-4 border-blue-600 flex-col justify-start items-start gap-8 inline-flex">
+          <div className="text-gray-950 text-2xl font-medium leading-loose">
+            Personal Information
+          </div>
+          <form onSubmit={submitUserDetails}>
+          <div className="justify-start items-start gap-8 inline-flex">
+            <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="picture">First Name</Label>
+                <Input type="text" placeholder="Enter first name" name="firstName" />
+              </div>
+            </div>
+            <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="picture">Last Name</Label>
+                <Input type="text" placeholder="Enter last name" name="lastName" />
+              </div>
+            </div>
+            <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="picture">Date of Birth</Label>
+                <Input type="date" placeholder="" name="dob" />
+              </div>
+            </div>
+          </div>
+          <div className='mt-5'>
+          <input className="px-4 w-[61px] h-[30px] bg-blue-600 rounded-sm text-white" value="Save" type='submit'/>
+          </div>
+          </form>
+        </div>
+      </section>
+      <section className="p-10 bg-gray-50">
+        <div className="w-[1012px] h-[248px] p-6 bg-white rounded-xl border-l-4 border-blue-600 flex-col justify-start items-start gap-8 inline-flex">
+          <div className="text-gray-950 text-2xl font-medium leading-loose">
+            Cities Travelled
+          </div>
+          <form onSubmit={submitCityDetails}>
+          <div className="justify-start items-start gap-8 inline-flex">
+            <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="picture">Date Arrived</Label>
+                <Input type="date" placeholder="Select date" name="dateTravel"/>
+              </div>
+            </div>
+            <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
+              <div className="grid w-full max-w-sm items-center gap-1.5">
+                <Label htmlFor="picture">City</Label>
+                <Input type="text" placeholder="Enter city name" name="city"/>
+              </div>
+            </div>
+          </div>
+          <div className='mt-5'>
+          <input className="px-4 w-[61px] h-[30px] bg-blue-600 rounded-sm text-white" value="Add" type='submit'/>
+          </div>
+          </form>
+        </div>
+      </section>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* User Details Card */}
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+      <section className="p-10 bg-gray-50">
+      <div className="flex justify-center items-center text-[36px]">
+          User Details
+        </div>
+        <div className="w-[1012px] h-full px-16 py-6 bg-white rounded-xl border-t-4 border-green-500 flex-col justify-start items-start gap-6 inline-flex">
+          <div className="text-gray-950 text-2xl font-medium">
+            Personal Information
+          </div>
+          <div className="gap-6">
+            <div className="flex justify-start">
+              <div>First Name: <span className='font-bold'>{ userDetails?.firstName }</span></div>
+            </div>
+            <div className="flex justify-start">
+              <div>Last Name: <span className='font-bold'>{ userDetails?.lastName }</span></div>
+            </div>
+            <div className="flex justify-start">
+              <div>Date of Birth: <span className='font-bold'>{ userDetails?.dob }</span></div>
+            </div>
+          </div>
+          <div className="text-gray-950 text-2xl font-medium font-['Inter Display'] leading-loose">
+              Cities Travelled
+            </div>
+            <div className="flex-col justify-start items-start gap-5 flex">
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+              
+              {cityDetails?.map((item, index)=>
+              <div className="justify-start items-center gap-8 inline-flex" key={index}>
+                <div className="text-gray-950 text-2xl font-medium font-['Inter Display'] leading-loose">
+                  {index + 1}
+                </div>
+                <div className="flex-col justify-start items-start gap-2 inline-flex">
+                  <div className="text-gray-950 text-lg font-medium font-['Inter'] leading-normal">
+                    City Name
+                  </div>
+                  <div className="text-neutral-400 text-lg font-medium font-['Inter'] leading-normal">
+                    {item.city}
+                  </div>
+                </div>
+                <div className="flex-col justify-start items-start gap-2 inline-flex">
+                  <div className="text-gray-950 text-lg font-medium font-['Inter'] leading-normal">
+                    Date Arrived
+                  </div>
+                  <div className="text-neutral-400 text-lg font-medium font-['Inter'] leading-normal">
+                    {item.date}
+                  </div>
+                </div>
+              </div>
+              )}
+            </div>
+            
+        </div>
+      </section>
     </main>
   );
 }
