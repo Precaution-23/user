@@ -12,6 +12,7 @@ export default function Home() {
     form.reset();
   } 
 
+  // here we are submkitting city and ate arrved details 
   const submitCityDetails = (event: React.FormEvent<HTMLFormElement>) =>{
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -22,6 +23,7 @@ export default function Home() {
     clearForm(event)
   }
 
+  // here we are submitting user details 
   const submitUserDetails = (event: React.FormEvent<HTMLFormElement>) =>{
     event.preventDefault();
     const data = new FormData(event.currentTarget);
