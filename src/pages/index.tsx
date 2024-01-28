@@ -163,7 +163,12 @@ export default function Home() {
               </div>
               )}
 
-              <Button onClick={sendToServer} variant='secondary'>Save Details</Button>
+              {
+               userDetails || cityDetails.length > 0 ? (
+                  <>
+                  <Button onClick={sendToServer} variant='secondary'>Save Details</Button></>
+                ) : <></>
+              }
             </div>
             
         </div>
