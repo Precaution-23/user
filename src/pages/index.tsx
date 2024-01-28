@@ -1,6 +1,7 @@
 import React, { useState }  from 'react'
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button';
 
 
 export default function Home() {
@@ -12,7 +13,7 @@ export default function Home() {
     form.reset();
   } 
 
-  // here we are submkitting city and ate arrved details 
+  // here we are submuitting city and ate arrved details 
   const submitCityDetails = (event: React.FormEvent<HTMLFormElement>) =>{
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,6 +36,17 @@ export default function Home() {
     clearForm(event)
   }
 
+  // here we are sending data to the backend to be saved into the database 
+  const sendToServer = () => {
+    const data = {
+      firstName: userDetails?.firstName,
+      lastName: userDetails?.lastName,
+      dob: userDetails?.dob,
+      cityDetails: cityDetails
+    }
+    // ideally there should be an api that will send data to the backend with the details stored on the data variable
+    // API LOGIC COMES HERE
+  }
 
   return (
     <main className="grid justify-items-center">
@@ -150,6 +162,8 @@ export default function Home() {
                 </div>
               </div>
               )}
+
+              <Button onClick={sendToServer} variant='secondary'>Save Details</Button>
             </div>
             
         </div>
