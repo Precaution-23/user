@@ -38,6 +38,7 @@ export default function Home() {
 
   // here we are sending data to the backend to be saved into the database 
   const sendToServer = () => {
+    // sample json data holding values provided on the form
     const data = {
       firstName: userDetails?.firstName,
       lastName: userDetails?.lastName,
