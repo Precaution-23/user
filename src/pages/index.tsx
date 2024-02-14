@@ -8,6 +8,7 @@ export default function Home() {
   const [cityDetails, setCityDetails] = useState<{date: string, city: string}[]>([])
   const [userDetails, setUserDetails] = useState<{firstName: string, lastName: string, dob: string}>()
 
+  // clear form after submission
   const clearForm = (event: React.FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     form.reset();
@@ -21,6 +22,7 @@ export default function Home() {
       date:  data.get("dateTravel") as string,
       city: data.get("city") as string,
     }])
+     // clearing form
     clearForm(event)
   }
 
@@ -33,6 +35,7 @@ export default function Home() {
       lastName: data.get("lastName") as string,
       dob: data.get("dob") as string
     })
+    // clearing form
     clearForm(event)
   }
 
@@ -63,25 +66,25 @@ export default function Home() {
           <div className="justify-start items-start gap-8 inline-flex">
             <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">First Name</Label>
+                <Label htmlFor="firstName">First Name</Label>
                 <Input type="text" placeholder="Enter first name" name="firstName" />
               </div>
             </div>
             <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">Last Name</Label>
+                <Label htmlFor="lastName">Last Name</Label>
                 <Input type="text" placeholder="Enter last name" name="lastName" />
               </div>
             </div>
             <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">Date of Birth</Label>
+                <Label htmlFor="dob">Date of Birth</Label>
                 <Input type="date" placeholder="" name="dob" />
               </div>
             </div>
           </div>
           <div className='mt-5'>
-          <input className="px-4 w-[61px] h-[30px] bg-blue-600 rounded-sm text-white" value="Save" type='submit'/>
+          <input className="px-4 w-[61px] h-[30px] bg-blue-600 rounded-sm text-white cursor-pointer" value="Save" type='submit'/>
           </div>
           </form>
         </div>
@@ -95,19 +98,19 @@ export default function Home() {
           <div className="justify-start items-start gap-8 inline-flex">
             <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">Date Arrived</Label>
+                <Label htmlFor="dateArrived">Date Arrived</Label>
                 <Input type="date" placeholder="Select date" name="dateTravel"/>
               </div>
             </div>
             <div className="w-[300px] flex-col justify-start items-center gap-1 inline-flex">
               <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label htmlFor="picture">City</Label>
+                <Label htmlFor="city">City</Label>
                 <Input type="text" placeholder="Enter city name" name="city"/>
               </div>
             </div>
           </div>
           <div className='mt-5'>
-          <input className="px-4 w-[61px] h-[30px] bg-blue-600 rounded-sm text-white" value="Add" type='submit'/>
+          <input className="px-4 w-[61px] h-[30px] bg-blue-600 rounded-sm text-white cursor-pointer" value="Add" type='submit'/>
           </div>
           </form>
         </div>
@@ -167,7 +170,7 @@ export default function Home() {
               {
                userDetails || cityDetails.length > 0 ? (
                   <>
-                  <Button onClick={sendToServer} variant='secondary'>Save Details</Button></>
+                  <Button onClick={sendToServer} variant='default' color=''>Save Details</Button></>
                 ) : <></>
               }
             </div>
